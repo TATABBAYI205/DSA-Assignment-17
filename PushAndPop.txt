@@ -1,0 +1,137 @@
+package Assignment17;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class PushAndPop 
+{
+    private Deque<Integer> frontQueue;
+    private Deque<Integer> backQueue;
+    private int middlePos;
+    public PushAndPop() 
+    {
+        frontQueue = new ArrayDeque<>();
+        backQueue = new ArrayDeque<>();
+        middlePos = 0;
+    }
+    public void pushFront(int val) 
+    {
+        frontQueue.offerFirst(val);
+        adjustMiddlePos(1);
+        balanceQueues();
+    }
+    public void pushMiddle(int val) 
+    {
+        if (middlePos == frontQueue.size()) 
+        {
+            frontQueue.offerLast(val);
+        } 
+        else 
+        {
+            backQueue.offerFirst(val);
+        }
+        adjustMiddlePos(1);
+        balanceQueues();
+    }
+    public void pushBack(int val)
+    {
+        backQueue.offerLast(val);
+        adjustMiddlePos(0);
+        balanceQueues();
+    }
+    public int popFront() 
+    {
+        if (frontQueue.isEmpty() && backQueue.isEmpty()) 
+        {
+            return -1;
+        }
+        int val;
+        if (!frontQueue.isEmpty()) 
+        {
+            val = frontQueue.pollFirst();
+        } 
+        else 
+        {
+            val = backQueue.pollFirst();
+            adjustMiddlePos(-1);
+        }
+        balanceQueues();
+        return val;
+    }
+    public int popMiddle() 
+    {
+        if (frontQueue.isEmpty() && backQueue.isEmpty()) 
+        {
+            return -1;
+        }
+        int val;
+        if (middlePos == frontQueue.size()) 
+        {
+            val = frontQueue.pollLast();
+        }
+        else 
+        {
+            val = backQueue.pollFirst();
+            adjustMiddlePos(-1);
+        }
+        return val;
+    }
+    public int popBack() 
+    {
+        if (frontQueue.isEmpty() && backQueue.isEmpty()) 
+        {
+            return -1;
+        }
+        int val;
+        if (!backQueue.isEmpty()) 
+        {
+            val = backQueue.pollLast();
+            adjustMiddlePos(0);
+        } 
+        else 
+        {
+            val = frontQueue.pollLast();
+        }
+        balanceQueues();
+        return val;
+    }
+    private void adjustMiddlePos(int change) 
+    {
+        middlePos += change;
+        if (middlePos < 0) 
+        {
+            middlePos = 0;
+        }
+        int maxSize = frontQueue.size() + backQueue.size() + 1;
+        if (middlePos > maxSize) 
+        {
+            middlePos = maxSize;
+        }
+    }
+    private void balanceQueues() 
+    {
+        while (frontQueue.size() > middlePos) 
+        {
+            backQueue.offerFirst(frontQueue.pollLast());
+        }
+        while (frontQueue.size() < middlePos) 
+        {
+            frontQueue.offerLast(backQueue.pollFirst());
+        }
+    }
+    public static void main(String[] args) 
+    {
+        PushAndPop queue = new PushAndPop();
+        System.out.println(queue.popFront());  
+        queue.pushFront(1);
+        queue.pushBack(2);
+        queue.pushMiddle(3);
+        queue.pushMiddle(4);
+        System.out.println(queue.popFront());
+        System.out.println(queue.popMiddle());
+        System.out.println(queue.popMiddle());
+        System.out.println(queue.popBack());
+        System.out.println(queue.popFront()); 
+    }
+}
+

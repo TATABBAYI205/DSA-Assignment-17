@@ -1,0 +1,39 @@
+package Assignment17;
+
+import java.util.*;
+
+public class StudentsEat 
+{
+    public static int countStudents(int[] students, int[] sandwiches) 
+    {
+        Queue<Integer> queue = new LinkedList<>();
+        for (int student : students) 
+        {
+            queue.add(student);
+        }
+        int[] counts = new int[2];
+        for (int sandwich : sandwiches) 
+        {
+            counts[sandwich]++;
+        }
+        while (!queue.isEmpty()) 
+        {
+            int student = queue.poll();
+            if (counts[student] > 0) 
+            {
+                counts[student]--;
+            } else {
+                queue.add(student);
+            }
+        }
+        return queue.size();
+    }
+    public static void main(String[] args) 
+    {
+        int[] students = {1, 1, 1, 0, 0, 1};
+        int[] sandwiches = {1, 0, 0, 0, 1, 1};
+        int unableToEat = countStudents(students, sandwiches);
+        System.out.println(unableToEat);
+    }
+}
+

@@ -1,0 +1,36 @@
+package Assignment17;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class RecentCounter 
+{
+    private Queue<Integer> requests;
+    public RecentCounter() 
+    {
+        requests = new LinkedList<>();
+    }
+    private String RecentCounter() 
+    {
+		return null;
+	}
+    public int ping(int t) 
+    {
+        requests.add(t);
+        while (requests.peek() < t - 3000) 
+        {
+            requests.poll();
+        }
+        return requests.size();
+    }
+    public static void main(String[] args) 
+    {
+        RecentCounter recentCounter = new RecentCounter();
+        System.out.print(recentCounter.RecentCounter()+", ");
+        System.out.print(recentCounter.ping(1)+", "); 
+        System.out.print(recentCounter.ping(100)+", "); 
+        System.out.print(recentCounter.ping(3001)+", ");
+        System.out.print(recentCounter.ping(3002)); 
+    }
+}
+

@@ -1,0 +1,47 @@
+package Assignment17;
+
+public class DataStream 
+{
+    private int[] circularBuffer;
+    private int bufferSize;
+    private int count;
+    private int currentIndex;
+    private int value;
+    public Object Datastream(int value, int k)
+    {
+        this.circularBuffer = new int[k];
+        this.bufferSize = k;
+        this.count = 0;
+        this.currentIndex = 0;
+        this.value = value;
+		return null;
+    }
+    public boolean consec(int num) 
+    {
+        circularBuffer[currentIndex] = num;
+        currentIndex = (currentIndex + 1) % bufferSize;
+        if (count < bufferSize) 
+        {
+            count++;
+            return false;
+        }
+        for (int i = 0; i < bufferSize; i++) 
+        {
+            if (circularBuffer[i] != value) 
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static void main(String[] args) 
+    {
+        DataStream dataStream = new DataStream();
+        System.out.print(dataStream.Datastream(4, 3)+", ");
+        System.out.print(dataStream.consec(4)+", "); 
+        System.out.print(dataStream.consec(4)+", ");
+        System.out.print(dataStream.consec(4)+", ");
+        System.out.print(dataStream.consec(3)+", "); 
+    }
+}
+

@@ -1,0 +1,31 @@
+package Assignment17;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClockWiseOrderGame 
+{
+    public static int findTheWinner(int n, int k) 
+    {
+        List<Integer> friends = new ArrayList<>();
+        for (int i = 1; i <= n; i++) 
+        {
+            friends.add(i);
+        }
+        int index = 0;
+        while (friends.size() > 1) 
+        {
+            index = (index + k - 1) % friends.size();
+            friends.remove(index);
+        }
+        return friends.get(0);
+    }
+    public static void main(String[] args) 
+    {
+        int n = 6;
+        int k = 5;
+        int winner = findTheWinner(n, k);
+        System.out.println(winner);
+    }
+}
+

@@ -1,0 +1,34 @@
+package Assignment17;
+
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class IntegerArray 
+{
+    public static int[] deckRevealedOrder(int[] deck) 
+    {
+        int n = deck.length;
+        Arrays.sort(deck);
+        Deque<Integer> indexQueue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            indexQueue.add(i);
+        }
+        int[] revealed = new int[n];
+        for (int card : deck) 
+        {
+            revealed[indexQueue.poll()] = card;
+            if (!indexQueue.isEmpty()) 
+            {
+                indexQueue.add(indexQueue.poll());
+            }
+        }
+        return revealed;
+    }
+    public static void main(String[] args) 
+    {
+        int[] deck = {17,13,11,2,3,5,7};
+        int[] revealed = deckRevealedOrder(deck);
+        System.out.println(Arrays.toString(revealed));
+    }
+}
